@@ -1,0 +1,46 @@
+{
+    "oceanmod:badge": {
+        "TEXT": [
+            "Ocean's Pencil Case",
+            "ocean",
+            "A suite of QoL changes and utilities.",
+            
+            "Enable whiteboard (requires restart)",
+            "Use middle click instead of right click to draw. Can also open whiteboard by middle clicking anywhere.",
+            "Enable Calculator (requires restart)",
+            "Enable Discord Rich Presence (requires restart)",
+            "r",
+            "g",
+            "b",
+            "Card rewards can be taken immediately without opening another reward screen.",
+            "Enable calculator (requires restart)"
+        ]
+    },
+
+    "oceanmod:discord": {
+        "TEXT": [
+            "Neow",
+            "Enemy",
+            "Elite",
+            "Boss",
+            "Rest site",
+            "Merchant",
+            "G",
+            "Chest",
+            "Small",
+            "Medium",
+            "Large",
+            "Boss chest",
+            "Act 4 door",
+            "Victory?",
+            "Victory!",
+            "Event",
+            "Modded room",
+            "A",
+            "H",
+            "HP",
+            "F",
+            "Turn"
+        ]
+    }
+}

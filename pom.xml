@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>oceanmod</groupId>
+    <artifactId>oceanmod</artifactId>
+    <version>v1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Ocean's Pencil Case</name>
+    <description>a bunch of small QoL utilities</description>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <SlayTheSpire.version>12-22-2020</SlayTheSpire.version>
+        <ModTheSpire.version>3.23.4</ModTheSpire.version>
+        <BaseMod.version>5.41.0</BaseMod.version>
+        <PansTrinkets.version>0.1.4</PansTrinkets.version>
+        <EvilWithin.version>4.1.14</EvilWithin.version>
+        <DiscordRPC.version>1.6.2</DiscordRPC.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--CHANGE THIS TO YOUR STEAM INSTALLATION-->
+        <Steam.path>D:\Prog\Steam\steamapps</Steam.path>
+        <stsPath>${Steam.path}/common/SlayTheSpire/</stsPath>
+        <workshopFolder>${Steam.path}/workshop/content/646570/</workshopFolder>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.megacrit.cardcrawl</groupId>
+            <artifactId>slaythespire</artifactId>
+            <version>${SlayTheSpire.version}</version>
+            <scope>system</scope>
+            <systemPath>${stsPath}desktop-1.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.evacipated.cardcrawl</groupId>
+            <artifactId>ModTheSpire</artifactId>
+            <version>${ModTheSpire.version}</version>
+            <scope>system</scope>
+            <systemPath>${workshopFolder}1605060445/ModTheSpire.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>basemod</groupId>
+            <artifactId>BaseMod</artifactId>
+            <version>${BaseMod.version}</version>
+            <scope>system</scope>
+            <systemPath>${workshopFolder}1605833019/BaseMod.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.evacipated.cardcrawl</groupId>
+            <artifactId>stslib</artifactId>
+            <version>1.17.2</version>
+            <scope>system</scope>
+            <systemPath>${workshopFolder}1609158507/StSLib.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.arikia.dev</groupId>
+            <artifactId>discord-rpc</artifactId>
+            <version>${DiscordRPC.version}</version>
+            <scope>system</scope>
+            <systemPath>${stsPath}desktop-1.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>pansTrinkets</groupId>
+            <artifactId>PansTrinkets</artifactId>
+            <version>${PansTrinkets.version}</version>
+            <scope>system</scope>
+            <systemPath>${workshopFolder}2805998622/PansTrinkets.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>evilwithin</groupId>
+            <artifactId>EvilWithin</artifactId>
+            <version>${EvilWithin.version}</version>
+            <scope>system</scope>
+            <systemPath>${workshopFolder}1610056683/downfall.jar</systemPath>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <copy file="target/${project.artifactId}.jar" tofile="${Steam.path}/common/SlayTheSpire/mods/${project.artifactId}.jar" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
