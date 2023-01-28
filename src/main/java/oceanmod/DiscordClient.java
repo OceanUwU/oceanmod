@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 
 public class DiscordClient {
     public static long startTime = -1L;
-    public static ArrayList<String> portraits = new ArrayList<String>(Arrays.asList("ironclad", "silent", "defect", "watcher", "hermit", "slimeboss", "guardian", "hexaghost", "champ", "automaton", "gremlins", "snecko"));
+    public static ArrayList<String> portraits = new ArrayList<String>(Arrays.asList("ironclad", "silent", "defect", "watcher", "hermit", "slimebound", "guardian", "hexaghost", "champ", "automaton", "gremlin", "snecko", "unchained"));
     private static final String[] TEXT = CardCrawlGame.languagePack.getUIString(OceanMod.ID+":discord").TEXT;
     private static final boolean enabled = OceanMod.config.getBool("discord");
 
@@ -116,7 +116,7 @@ public class DiscordClient {
             smallImage = "win";
         }
         
-        String portrait = AbstractDungeon.player.title.toLowerCase().replace("the", "").replaceAll(" ", "");
+        String portrait = AbstractDungeon.player.getClass().getSimpleName().toLowerCase().replace("the", "").replace("character", "").replace("char", "").replaceAll(" ", "");
         
         UpdatePresence(AbstractDungeon.player.title.substring(0, 1).toUpperCase() + AbstractDungeon.player.title.substring(1) + " - " + TEXT[17] + AbstractDungeon.ascensionLevel + (hasKeys ? TEXT[18] : "") + " - " + AbstractDungeon.player.currentHealth + "/" + AbstractDungeon.player.maxHealth + TEXT[19], TEXT[20] + AbstractDungeon.floorNum + " - " + roomType, portraits.contains(portrait) ? portrait : "cover", smallImage, true);
     }
