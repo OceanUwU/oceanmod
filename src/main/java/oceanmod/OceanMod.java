@@ -33,6 +33,7 @@ import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen;
 
 import oceanmod.patches.BorderColours;
+import oceanmod.patches.LanguagePatches;
 import oceanmod.ui.whiteboard.Menu;
 import oceanmod.ui.whiteboard.PanelItem;
 
@@ -48,7 +49,8 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
     public static ModPanel settingsPanel = new ModPanel();
     
     public static Settings.GameLanguage[] SupportedLanguages = {
-        Settings.GameLanguage.ENG
+        Settings.GameLanguage.ENG,
+        LanguagePatches.CYM
     };
 
     public static boolean doVisibleRewards;

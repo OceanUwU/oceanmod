@@ -1,0 +1,46 @@
+{
+    "oceanmod:badge": {
+        "TEXT": [
+            "Cas Pensil Ocean",
+            "ocean",
+            "Casgliad o newidiadau a chyfleusterau gwella ansawdd bywyd.",
+            
+            "Defnyddio bwrdd gwyn (angen ail-ddechrau)",
+            "Defnyddio clic canol yn lle clic dde i ysgrifennu. Gall hefyd agor y bwrdd gwyn gan defnyddio'r clic canol unrhywle.",
+            "Defnyddio cyfrifiannell (angen ail-ddechrau)",
+            "Defnyddio Discord Rich Presence (angen ail-ddechrau)",
+            "coch",
+            "gwyrdd",
+            "glas",
+            "Gall gwobrau cerdyn cael eu cymryd yn syth heb agor scrin gwobr arall.",
+            "Defnyddio cyfrifiannell (angen ail-ddechrau)"
+        ]
+    },
+
+    "oceanmod:discord": {
+        "TEXT": [
+            "Neow",
+            "Gelyn",
+            "Elit",
+            "Meistr",
+            "Safle gorffwys",
+            "Masnachwr",
+            "A",
+            "Cist",
+            "Bach",
+            "Canolig",
+            "Mawr",
+            "Cist meistr",
+            "Drws act 4",
+            "Buddugoliaeth?",
+            "Buddugoliaeth!",
+            "Digwyddiad",
+            "Ystafell o addasiad",
+            "E",
+            "C",
+            "PT",
+            "LL",
+            "Tro"
+        ]
+    }
+}
