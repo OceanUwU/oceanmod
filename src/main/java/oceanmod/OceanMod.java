@@ -83,7 +83,7 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
         config = new SpireConfig(ID, "config", defaults);
         whiteboardEnabled = config.getBool("whiteboard");
         doVisibleRewards = config.getBool("visiblerewards");
-        doCalculator = config.getBool("visiblerewards");
+        doCalculator = config.getBool("calculator");
         BaseMod.subscribe(new OceanMod());
     }
 
