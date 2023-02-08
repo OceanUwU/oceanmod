@@ -14,30 +14,25 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class BorderColours {
-    public static Color basic = new Color(OceanMod.config.getFloat("br"), OceanMod.config.getFloat("bg"), OceanMod.config.getFloat("bb"), 1.0F);
-    public static Color special = new Color(OceanMod.config.getFloat("spr"), OceanMod.config.getFloat("spg"), OceanMod.config.getFloat("spb"), 1.0F);
-    public static Color status = new Color(OceanMod.config.getFloat("str"), OceanMod.config.getFloat("stg"), OceanMod.config.getFloat("stb"), 1.0F);
-    public static Color curse = new Color(OceanMod.config.getFloat("cr"), OceanMod.config.getFloat("cg"), OceanMod.config.getFloat("cb"), 1.0F);
-    public static boolean doBasic = OceanMod.config.getBool("be");
-    public static boolean doSpecial = OceanMod.config.getBool("spe");
-    public static boolean doStatus = OceanMod.config.getBool("ste");
-    public static boolean doCurse = OceanMod.config.getBool("ce");
+    public static String[] rarityStrings = {"co", "un", "ra", "ba", "sp", "st", "cu"};
+    public static boolean[] rarityConfigs = new boolean[rarityStrings.length];
+    public static Color[] colors = new Color[rarityStrings.length];
 
     private static TextureAtlas ucbCardUiAtlas;
-    public static TextureAtlas.AtlasRegion FRAME_ATTACK;
-    public static TextureAtlas.AtlasRegion FRAME_SKILL;
-    public static TextureAtlas.AtlasRegion FRAME_POWER;
-    public static TextureAtlas.AtlasRegion BANNER;
-    public static TextureAtlas.AtlasRegion FRAME_ATTACK_L;
-    public static TextureAtlas.AtlasRegion FRAME_SKILL_L;
-    public static TextureAtlas.AtlasRegion FRAME_POWER_L;
-    public static TextureAtlas.AtlasRegion BANNER_L;
+    private static TextureAtlas.AtlasRegion FRAME_ATTACK;
+    private static TextureAtlas.AtlasRegion FRAME_SKILL;
+    private static TextureAtlas.AtlasRegion FRAME_POWER;
+    private static TextureAtlas.AtlasRegion BANNER;
+    private static TextureAtlas.AtlasRegion FRAME_ATTACK_L;
+    private static TextureAtlas.AtlasRegion FRAME_SKILL_L;
+    private static TextureAtlas.AtlasRegion FRAME_POWER_L;
+    private static TextureAtlas.AtlasRegion BANNER_L;
 
-    public static Method renderHelperMethod;
-    public static Field renderColorField;
-    public static Method popupRenderHelperMethod;
-    public static Field popupCardField;
-    
+    private static Method renderHelperMethod;
+    private static Field renderColorField;
+    private static Method popupRenderHelperMethod;
+    private static Field popupCardField;
+
     static {
         ucbCardUiAtlas = new TextureAtlas(Gdx.files.internal(OceanMod.resourcePath("images/borders/uniquebordercardui.atlas")));
         FRAME_ATTACK = ucbCardUiAtlas.findRegion("512/frame_attack_rare");
@@ -60,28 +55,23 @@ public class BorderColours {
             popupCardField.setAccessible(true);
         } catch (Exception e) {
             e.printStackTrace();
-        } 
+        }
     }
-    
 
     public static Color getColor(AbstractCard c) {
-        if (c.type == AbstractCard.CardType.STATUS) {
-            if (doStatus) return status;
-            return null;
-        }
+        int n = -1;
         switch (c.rarity) {
-            case BASIC:
-                if (doBasic) return basic;
-                return null;
-            case SPECIAL:
-                if (doSpecial) return special;
-                return null;
-            case CURSE:
-                if (doCurse) return curse;
-                return null;
-            default:
-                return null;
+            case COMMON: n = 0; break;
+            case UNCOMMON: n = 1; break;
+            case RARE: n = 2; break;
+            case BASIC: n = 3; break;
+            case SPECIAL: n = 4; break;
+            case CURSE: n = 6; break;
         }
+        if (c.type == AbstractCard.CardType.STATUS) n = 5;
+        if (n == -1) return null;
+        if (rarityConfigs[n]) return colors[n];
+        return null;
     }
 
     @SpirePatch(

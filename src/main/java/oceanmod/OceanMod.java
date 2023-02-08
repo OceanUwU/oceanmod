@@ -8,13 +8,19 @@ import basemod.ModToggleButton;
 import basemod.interfaces.EditStringsSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
 import basemod.interfaces.RenderSubscriber;
+
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.blue.DoomAndGloom;
 import com.megacrit.cardcrawl.cards.curses.Injury;
+import com.megacrit.cardcrawl.cards.green.Backflip;
+import com.megacrit.cardcrawl.cards.green.DaggerSpray;
+import com.megacrit.cardcrawl.cards.purple.Brilliance;
 import com.megacrit.cardcrawl.cards.red.Bash;
 import com.megacrit.cardcrawl.cards.status.Dazed;
 import com.megacrit.cardcrawl.cards.tempCards.Miracle;
@@ -51,10 +57,7 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
     public static PanelItem whiteboardPanelItem;
     public static boolean whiteboardOpen = false;
 
-    private AbstractCard exampleBasic;
-    private AbstractCard exampleSpecial;
-    private AbstractCard exampleStatus;
-    private AbstractCard exampleCurse;
+    private static AbstractCard[] exampleCards = {null, null, null, null, null, null, null};
 
     public static void initialize() throws IOException {
         defaults.setProperty("whiteboard", "true");
@@ -64,10 +67,22 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
         defaults.setProperty("middle", "false");
         defaults.setProperty("discord", "true");
         defaults.setProperty("visiblerewards", "true");
-        defaults.setProperty("be", "true");
-        defaults.setProperty("br", "0.44");
-        defaults.setProperty("bg", "0.44");
-        defaults.setProperty("bb", "0.44");
+        defaults.setProperty("coe", "false");
+        defaults.setProperty("cor", "0");
+        defaults.setProperty("cog", "0");
+        defaults.setProperty("cob", "0");
+        defaults.setProperty("une", "false");
+        defaults.setProperty("unr", "0");
+        defaults.setProperty("ung", "0");
+        defaults.setProperty("unb", "0");
+        defaults.setProperty("rae", "false");
+        defaults.setProperty("rar", "0");
+        defaults.setProperty("rag", "0");
+        defaults.setProperty("rab", "0");
+        defaults.setProperty("bae", "true");
+        defaults.setProperty("bar", "0.44");
+        defaults.setProperty("bag", "0.44");
+        defaults.setProperty("bab", "0.44");
         defaults.setProperty("spe", "true");
         defaults.setProperty("spr", "0.31");
         defaults.setProperty("spg", "0.69");
@@ -76,10 +91,10 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
         defaults.setProperty("str", "0.67");
         defaults.setProperty("stg", "0.52");
         defaults.setProperty("stb", "0.54");
-        defaults.setProperty("ce", "false");
-        defaults.setProperty("cr", "0.30");
-        defaults.setProperty("cg", "0.30");
-        defaults.setProperty("cb", "0.28");
+        defaults.setProperty("cue", "false");
+        defaults.setProperty("cur", "0.30");
+        defaults.setProperty("cug", "0.30");
+        defaults.setProperty("cub", "0.28");
         config = new SpireConfig(ID, "config", defaults);
         whiteboardEnabled = config.getBool("whiteboard");
         doVisibleRewards = config.getBool("visiblerewards");
@@ -149,148 +164,57 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
                 doVisibleRewards = button.enabled;
         }));
 
+        float right = -250 * 3;
         configY = 565;
-        settingsPanel.addUIElement(new ModToggleButton(Settings.WIDTH/2 - 450 - 18F * Settings.scale,configY,config.getBool("be"),false,settingsPanel,(button) -> {
-                config.setBool("be", button.enabled);
-                BorderColours.doBasic = button.enabled;
+        exampleCards[0] = new DaggerSpray();
+        exampleCards[1] = new DoomAndGloom();
+        exampleCards[2] = new Brilliance();
+        exampleCards[3] = new Bash();
+        exampleCards[4] = new Miracle();
+        exampleCards[5] = new Dazed();
+        exampleCards[6] = new Injury();
+        System.out.println(BorderColours.rarityStrings);
+        System.out.println(BorderColours.rarityStrings.length);
+        for (int i = 0; i < BorderColours.rarityStrings.length; i++) {
+            exampleCards[i].drawScale = 0.5f;
+            exampleCards[i].current_x = Settings.WIDTH/2 + right * Settings.scale;
+            exampleCards[i].current_y = 370;
+            final Integer inI = new Integer(i);
+            settingsPanel.addUIElement(new ModToggleButton(Settings.WIDTH/2 + right - 18F * Settings.scale,configY,config.getBool(BorderColours.rarityStrings[inI]+"e"),false,settingsPanel,(button) -> {
+                config.setBool(BorderColours.rarityStrings[inI]+"e", button.enabled);
+                BorderColours.rarityConfigs[inI] = button.enabled;
                 try {config.save();} catch (Exception e) {}
-        }));
-        settingsPanel.addUIElement(new ModToggleButton(Settings.WIDTH/2 - 150 - 18F * Settings.scale,configY,config.getBool("spe"),false,settingsPanel,(button) -> {
-                config.setBool("spe", button.enabled);
-                BorderColours.doSpecial = button.enabled;
-                try {config.save();} catch (Exception e) {}
-        }));
-        settingsPanel.addUIElement(new ModToggleButton(Settings.WIDTH/2 + 150 - 18F * Settings.scale,configY,config.getBool("ste"),false,settingsPanel,(button) -> {
-                config.setBool("ste", button.enabled);
-                BorderColours.doStatus = button.enabled;
-                try {config.save();} catch (Exception e) {}
-        }));
-        settingsPanel.addUIElement(new ModToggleButton(Settings.WIDTH/2 + 450 - 18F * Settings.scale,configY,config.getBool("ce"),false,settingsPanel,(button) -> {
-                config.setBool("ce", button.enabled);
-                BorderColours.doCurse = button.enabled;
-                try {config.save();} catch (Exception e) {}
-        }));
-        configY -=15;
-        settingsPanel.addUIElement(new ModMinMaxSlider(
-            TEXT[7],                         Settings.WIDTH/2 - 450 - 115F * Settings.scale,configY,0,1,
-            config.getFloat("br")," ",settingsPanel,(slider) -> {
-                config.setFloat("br", slider.getValue());
-                BorderColours.basic.r = slider.getValue();
-                try {config.save();} catch (Exception e) {}
-        }));
-        settingsPanel.addUIElement(new ModMinMaxSlider(
-            "",Settings.WIDTH/2 - 150 - 115F * Settings.scale,configY,0,1,
-            config.getFloat("spr")," ",settingsPanel,(slider) -> {
-                config.setFloat("spr", slider.getValue());
-                BorderColours.special.r = slider.getValue();
-                try {config.save();} catch (Exception e) {}
-        }));
-        settingsPanel.addUIElement(new ModMinMaxSlider(
-            "",Settings.WIDTH/2 + 150 - 115F * Settings.scale,configY,0,1,
-            config.getFloat("str")," ",settingsPanel,(slider) -> {
-                config.setFloat("str", slider.getValue());
-                BorderColours.status.r = slider.getValue();
-                try {config.save();} catch (Exception e) {}
-        }));
-        settingsPanel.addUIElement(new ModMinMaxSlider(
-            "",Settings.WIDTH/2 + 450 - 115F * Settings.scale,configY,0,1,
-            config.getFloat("cr")," ",settingsPanel,(slider) -> {
-                config.setFloat("cr", slider.getValue());
-                BorderColours.curse.r = slider.getValue();
-                try {config.save();} catch (Exception e) {}
-        }));
-        configY -=30;
-        settingsPanel.addUIElement(new ModMinMaxSlider(
-            TEXT[8],                         Settings.WIDTH/2 - 450 - 115F * Settings.scale,configY,0,1,
-            config.getFloat("bg")," ",settingsPanel,(slider) -> {
-                config.setFloat("bg", slider.getValue());
-                BorderColours.basic.g = slider.getValue();
-                try {config.save();} catch (Exception e) {}
-        }));
-        settingsPanel.addUIElement(new ModMinMaxSlider(
-            "",Settings.WIDTH/2 - 150 - 115F * Settings.scale,configY,0,1,
-            config.getFloat("spg")," ",settingsPanel,(slider) -> {
-                config.setFloat("spg", slider.getValue());
-                BorderColours.special.g = slider.getValue();
-                try {config.save();} catch (Exception e) {}
-        }));
-        settingsPanel.addUIElement(new ModMinMaxSlider(
-            "",Settings.WIDTH/2 + 150 - 115F * Settings.scale,configY,0,1,
-            config.getFloat("stg")," ",settingsPanel,(slider) -> {
-                config.setFloat("stg", slider.getValue());
-                BorderColours.status.g = slider.getValue();
-                try {config.save();} catch (Exception e) {}
-        }));
-        settingsPanel.addUIElement(new ModMinMaxSlider(
-            "",Settings.WIDTH/2 + 450 - 115F * Settings.scale,configY,0,1,
-            config.getFloat("cg")," ",settingsPanel,(slider) -> {
-                config.setFloat("cg", slider.getValue());
-                BorderColours.curse.g = slider.getValue();
-                try {config.save();} catch (Exception e) {}
-        }));
-        configY -=30;
-        settingsPanel.addUIElement(new ModMinMaxSlider(
-            TEXT[9],                         Settings.WIDTH/2 - 450 - 115F * Settings.scale,configY,0,1,
-            config.getFloat("bb")," ",settingsPanel,(slider) -> {
-                config.setFloat("bb", slider.getValue());
-                BorderColours.basic.b = slider.getValue();
-                try {config.save();} catch (Exception e) {}
-        }));
-        settingsPanel.addUIElement(new ModMinMaxSlider(
-            "",Settings.WIDTH/2 - 150 - 115F * Settings.scale,configY,0,1,
-            config.getFloat("spb")," ",settingsPanel,(slider) -> {
-                config.setFloat("spb", slider.getValue());
-                BorderColours.special.b = slider.getValue();
-                try {config.save();} catch (Exception e) {}
-        }));
-        settingsPanel.addUIElement(new ModMinMaxSlider(
-            "",Settings.WIDTH/2 + 150 - 115F * Settings.scale,configY,0,1,
-            config.getFloat("stb")," ",settingsPanel,(slider) -> {
-                config.setFloat("stb", slider.getValue());
-                BorderColours.status.b = slider.getValue();
-                try {config.save();} catch (Exception e) {}
-        }));
-        settingsPanel.addUIElement(new ModMinMaxSlider(
-            "",Settings.WIDTH/2 + 450 - 115F * Settings.scale,configY,0,1,
-            config.getFloat("cb")," ",settingsPanel,(slider) -> {
-                config.setFloat("cb", slider.getValue());
-                BorderColours.curse.b = slider.getValue();
-                try {config.save();} catch (Exception e) {}
-        }));
-        configY -=30;
+            }));
+            for (int j = 0; j < 3; j++) {
+                final Integer inJ = new Integer(j);
+                settingsPanel.addUIElement(new ModMinMaxSlider(
+                    i==0 ?TEXT[7+j] : "",Settings.WIDTH/2 + right - 115F * Settings.scale,configY-15-30*j,0,1,
+                    config.getFloat(BorderColours.rarityStrings[i]+"rgb".charAt(j))," ",settingsPanel,(slider) -> {
+                        config.setFloat(BorderColours.rarityStrings[inI]+"rgb".charAt(inJ), slider.getValue());
+                        Color color = BorderColours.colors[inI];
+                        float[] rgb = {color.r, color.g, color.b};
+                        rgb[inJ] = slider.getValue();
+                        color.set(rgb[0], rgb[1], rgb[2], 1.0F);
+                        try {config.save();} catch (Exception e) {}
+                }));
+            }
+            right += 250;
+        }
+        for (int i = 0; i < BorderColours.rarityStrings.length; i++) {
+            BorderColours.rarityConfigs[i] = OceanMod.config.getBool(BorderColours.rarityStrings[i]+"e");
+            BorderColours.colors[i] = new Color(
+                OceanMod.config.getFloat(BorderColours.rarityStrings[i]+"r"),
+                OceanMod.config.getFloat(BorderColours.rarityStrings[i]+"g"),
+                OceanMod.config.getFloat(BorderColours.rarityStrings[i]+"b"), 1.0F);
+        }
 
         BaseMod.registerModBadge(new Texture(resourcePath("images/badge.jpg")), TEXT[0], TEXT[1], TEXT[2], settingsPanel);
     }
 
     public void receiveRender(SpriteBatch sb) {
-        if (settingsPanel.isUp) {
-            if (exampleBasic == null) {
-                exampleBasic = new Bash();
-                exampleSpecial = new Miracle();
-                exampleStatus = new Dazed();
-                exampleCurse = new Injury();
-                exampleBasic.current_x = Settings.WIDTH/2 - 450;
-                exampleBasic.current_y = 370;
-                exampleBasic.drawScale = 0.5f;
-                exampleSpecial.current_x = Settings.WIDTH/2 - 150;
-                exampleSpecial.current_y = 370;
-                exampleSpecial.drawScale = 0.5f;
-                exampleStatus.current_x = Settings.WIDTH/2 + 150;
-                exampleStatus.current_y = 370;
-                exampleStatus.drawScale = 0.5f;
-                exampleCurse.current_x = Settings.WIDTH/2 + 450;
-                exampleCurse.current_y = 370;
-                exampleCurse.drawScale = 0.5f;
-                System.out.println(exampleBasic.current_x);
-                System.out.println(exampleBasic.current_x);
-                System.out.println(exampleBasic.current_x);
-                System.out.println(exampleBasic.current_x);
-            }
-            exampleBasic.render(sb);
-            exampleSpecial.render(sb);
-            exampleStatus.render(sb);
-            exampleCurse.render(sb);
-        }
+        if (settingsPanel.isUp)
+            for (AbstractCard i : exampleCards)
+                i.render(sb);
     }
 
     public static String resourcePath(String path) {
