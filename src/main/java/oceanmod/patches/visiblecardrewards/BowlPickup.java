@@ -21,7 +21,7 @@ public class BowlPickup {
     @SpirePatch(clz=AbstractRelic.class, method="onEquip")
     public static class BowlTrack {
         public static void Postfix(AbstractRelic __instance) {
-            if (__instance instanceof SingingBowl) {
+            if (__instance instanceof SingingBowl && AbstractDungeon.screen == AbstractDungeon.CurrentScreen.COMBAT_REWARD) {
                 bowlPickedUp = true;
                 skipRelic = __instance;
             } else if (Loader.isModLoaded("stslib") && CardRewardSkipButtonRelic.class.isAssignableFrom(__instance.getClass()))
