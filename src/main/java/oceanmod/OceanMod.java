@@ -173,8 +173,6 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
         exampleCards[4] = new Miracle();
         exampleCards[5] = new Dazed();
         exampleCards[6] = new Injury();
-        System.out.println(BorderColours.rarityStrings);
-        System.out.println(BorderColours.rarityStrings.length);
         for (int i = 0; i < BorderColours.rarityStrings.length; i++) {
             exampleCards[i].drawScale = 0.5f;
             exampleCards[i].current_x = Settings.WIDTH/2 + right * Settings.scale;

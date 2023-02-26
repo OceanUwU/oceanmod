@@ -36,18 +36,9 @@ public class BetaToggle {
 
     public static class Open {
         @SpirePatch(clz=SingleRelicViewPopup.class, method="open", paramtypez={AbstractRelic.class, ArrayList.class})
-        public static class Group {
-            public static void Postfix(SingleRelicViewPopup __instance, AbstractRelic relic, ArrayList<AbstractRelic> group) {
-                loadPref(__instance, relic);
-            }
-        }
-
+        public static class Group {public static void Postfix(SingleRelicViewPopup __instance, AbstractRelic relic, ArrayList<AbstractRelic> group) {loadPref(__instance, relic);}}
         @SpirePatch(clz=SingleRelicViewPopup.class, method="open", paramtypez={AbstractRelic.class})
-        public static class NoGroup {
-            public static void Postfix(SingleRelicViewPopup __instance, AbstractRelic relic) {
-                loadPref(__instance, relic);
-            }
-        }
+        public static class NoGroup {public static void Postfix(SingleRelicViewPopup __instance, AbstractRelic relic) {loadPref(__instance, relic);}}
 
         public static void loadPref(SingleRelicViewPopup popup, AbstractRelic relic) {
             currRelic = relic;
@@ -66,7 +57,7 @@ public class BetaToggle {
     public static void toggleBeta(SingleRelicViewPopup popup, boolean firstTime) {
         if (!firstTime)
             currRelic.update();
-        if (enabled) ReflectionHacks.setPrivate(popup, SingleRelicViewPopup.class, "largeImg", new Texture(BetaRelics.betas.get(currRelic.relicId).get(2)));
+        if (enabled) ReflectionHacks.setPrivate(popup, SingleRelicViewPopup.class, "largeImg", null);
         else ReflectionHacks.setPrivate(popup, SingleRelicViewPopup.class, "largeImg", Image.normalLargeImg.get(popup));
     }
 
@@ -110,6 +101,7 @@ public class BetaToggle {
         public static void Postfix(SingleRelicViewPopup __instance, SpriteBatch sb) {
             if (available) {
                 if (enableHb == null) return; 
+                FontHelper.cardTitleFont.getData().setScale(1.0F);
                 sb.setColor(Color.WHITE);
                 sb.draw(ImageMaster.CHECKBOX, enableHb.cX - 80.0F * Settings.scale - 32.0F, enableHb.cY - 32.0F, 32.0F, 32.0F, 64.0F, 64.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 64, 64, false, false);
                 if (enableHb.hovered)

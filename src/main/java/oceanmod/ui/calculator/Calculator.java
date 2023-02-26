@@ -60,7 +60,6 @@ public class Calculator implements RenderSubscriber, PreUpdateSubscriber {
         if (LocalizedStrings.break_chars != null)
             (font.getData()).breakChars = LocalizedStrings.break_chars.toCharArray(); 
         (font.getData()).fontFile = fontFile;
-        System.out.println(font);
     }
 
     public Calculator(float xLoc, float yLoc) {

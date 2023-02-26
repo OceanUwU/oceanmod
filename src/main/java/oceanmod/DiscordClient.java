@@ -116,8 +116,10 @@ public class DiscordClient {
             smallImage = "win";
         }
         
+        String line1 = AbstractDungeon.player.title.substring(0, 1).toUpperCase() + AbstractDungeon.player.title.substring(1) + " - " + TEXT[17] + AbstractDungeon.ascensionLevel + (hasKeys ? TEXT[18] : "") + " - " + AbstractDungeon.player.currentHealth + "/" + AbstractDungeon.player.maxHealth + TEXT[19];
+        String line2 = TEXT[20] + AbstractDungeon.floorNum + " - " + roomType;
         String portrait = AbstractDungeon.player.getClass().getSimpleName().toLowerCase().replace("the", "").replace("character", "").replace("char", "").replaceAll(" ", "");
         
-        UpdatePresence(AbstractDungeon.player.title.substring(0, 1).toUpperCase() + AbstractDungeon.player.title.substring(1) + " - " + TEXT[17] + AbstractDungeon.ascensionLevel + (hasKeys ? TEXT[18] : "") + " - " + AbstractDungeon.player.currentHealth + "/" + AbstractDungeon.player.maxHealth + TEXT[19], TEXT[20] + AbstractDungeon.floorNum + " - " + roomType, portraits.contains(portrait) ? portrait : "cover", smallImage, true);
+        UpdatePresence(line1, line2, portraits.contains(portrait) ? portrait : "cover", smallImage, true);
     }
 }
