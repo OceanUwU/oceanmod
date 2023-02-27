@@ -28,6 +28,7 @@ public class BorderColours {
     private static TextureAtlas.AtlasRegion FRAME_POWER_L;
     private static TextureAtlas.AtlasRegion BANNER_L;
 
+    private static Color transparent = new Color(1.0F, 1.0F, 1.0F, 0.0F);
     private static Method renderHelperMethod;
     private static Field renderColorField;
     private static Method popupRenderHelperMethod;
@@ -76,10 +77,10 @@ public class BorderColours {
 
     @SpirePatch(
         clz=AbstractCard.class,
-        method="renderImage"
+        method="renderPortraitFrame"
     )
     public static class SmallCardBorderPatch {
-        public static void Postfix(AbstractCard c, SpriteBatch sb, boolean hovered, boolean selected) {
+        public static void Prefix(AbstractCard c, SpriteBatch sb, float x, float y) {
             try {
                 TextureAtlas.AtlasRegion frame;
                 switch (c.type) {
@@ -95,21 +96,33 @@ public class BorderColours {
                 }
                 Color color = getColor(c);
                 if (color == null) return;
-                Color renderColor = new Color(color.r, color.g, color.b, ((Color)renderColorField.get(c)).a);
-                renderHelperMethod.invoke(c, new Object[] { sb, renderColor, frame, c.current_x, c.current_y });
-                renderHelperMethod.invoke(c, new Object[] { sb, renderColor, BANNER, c.current_x, c.current_y });
+                color.a = c.transparency;
+                renderHelperMethod.invoke(c, new Object[] { sb, color, frame, x, y });
+                renderHelperMethod.invoke(c, new Object[] { sb, color, BANNER, x, y });
+                ((Color)renderColorField.get(c)).a = 0.0F;
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+        }
+
+        @SpirePatch(clz=AbstractCard.class,method="renderBannerImage")
+        public static class ResetColorAfterBanner {
+            public static void Postfix(AbstractCard c) {
+                try {
+                    ((Color)renderColorField.get(c)).a = c.transparency;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     @SpirePatch(
         clz=SingleCardViewPopup.class,
-        method="renderCardBanner"
+        method="renderFrame"
     )
     public static class LargeCardBorderPatch {
-        public static void Postfix(SingleCardViewPopup popup, SpriteBatch sb) {
+        public static void Prefix(SingleCardViewPopup popup, SpriteBatch sb) {
             try {
                 AbstractCard c = ((AbstractCard)popupCardField.get(popup));
                 TextureAtlas.AtlasRegion frame;
@@ -129,9 +142,16 @@ public class BorderColours {
                 sb.setColor(color);
                 popupRenderHelperMethod.invoke(popup, new Object[] { sb, Settings.WIDTH / 2.0F, Settings.HEIGHT / 2.0F, frame});
                 popupRenderHelperMethod.invoke(popup, new Object[] { sb, Settings.WIDTH / 2.0F, Settings.HEIGHT / 2.0F, BANNER_L});
-                sb.setColor(Color.WHITE);
+                sb.setColor(transparent);
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+        }
+
+        @SpirePatch(clz=SingleCardViewPopup.class,method="renderCardBanner")
+        public static class ResetColorAfterBanner {
+            public static void Postfix(SingleCardViewPopup popup, SpriteBatch sb) {
+                sb.setColor(Color.WHITE);
             }
         }
     }
