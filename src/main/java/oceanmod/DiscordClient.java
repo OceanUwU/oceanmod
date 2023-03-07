@@ -1,6 +1,7 @@
 package oceanmod;
 
 import com.megacrit.cardcrawl.core.Settings;
+import com.evacipated.cardcrawl.modthespire.Loader;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -20,6 +21,8 @@ import com.megacrit.cardcrawl.rewards.chests.MediumChest;
 import com.megacrit.cardcrawl.rewards.chests.LargeChest;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.arikia.dev.drpc.DiscordRPC;
+import spireTogether.SpireTogetherMod;
+import spireTogether.network.P2P.P2PManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +53,10 @@ public class DiscordClient {
             return;
         if (AbstractDungeon.currMapNode == null)
             return;
+        if (Loader.isModLoaded("spireTogether") && SpireTogetherMod.isConnected) {
+            MultiplayerFloorInfo();
+            return;
+        }
 
         boolean hasKeys = Settings.isFinalActAvailable && Settings.hasRubyKey && Settings.hasEmeraldKey && Settings.hasSapphireKey;
         String roomType;
@@ -120,6 +127,65 @@ public class DiscordClient {
         String line2 = TEXT[20] + AbstractDungeon.floorNum + " - " + roomType;
         String portrait = AbstractDungeon.player.getClass().getSimpleName().toLowerCase().replace("the", "").replace("character", "").replace("char", "").replaceAll(" ", "");
         
+        UpdatePresence(line1, line2, portraits.contains(portrait) ? portrait : "cover", smallImage, true);
+    }
+
+    public static void SpireTogetherLobbyInfo() {
+        UpdatePresence(TEXT[25], TEXT[23] + P2PManager.GetPlayerCount() + TEXT[24], "cover", "", false);
+    }
+
+    public static void MultiplayerFloorInfo() {
+        boolean hasKeys = Settings.isFinalActAvailable && Settings.hasRubyKey && Settings.hasEmeraldKey && Settings.hasSapphireKey;
+        String roomType;
+        String smallImage;
+
+        if (AbstractDungeon.currMapNode.room instanceof NeowRoom) {
+            roomType = TEXT[0];
+            smallImage = "neow";
+        } else if (AbstractDungeon.currMapNode.room instanceof MonsterRoom) {
+            if (AbstractDungeon.currMapNode.room instanceof MonsterRoomBoss) {
+                roomType = TEXT[3];
+                smallImage = "boss";
+            } else if (AbstractDungeon.currMapNode.room instanceof MonsterRoomElite) {
+                roomType = TEXT[2];
+                smallImage = "elite";
+            } else {
+                roomType = TEXT[1];
+                smallImage = "enemy";
+            }
+        }
+        else if (AbstractDungeon.currMapNode.room instanceof RestRoom) {
+            roomType = TEXT[4];
+            smallImage = "rest";
+        } else if (AbstractDungeon.currMapNode.room instanceof ShopRoom) {
+            roomType = TEXT[5];
+            smallImage = "shop";
+        } else if (AbstractDungeon.currMapNode.room instanceof TreasureRoom) {
+            roomType = TEXT[7];
+            smallImage = "chest";
+        }
+        else if (AbstractDungeon.currMapNode.room instanceof TreasureRoomBoss) {
+            roomType = TEXT[11];
+            smallImage = "bosschest";
+        }
+        else if (AbstractDungeon.currMapNode.room instanceof VictoryRoom) {
+            roomType = hasKeys ? TEXT[12] : TEXT[13];
+            smallImage = "win";
+        } else if (AbstractDungeon.currMapNode.room instanceof TrueVictoryRoom) {
+            roomType = TEXT[14];
+            smallImage = "win";
+        } else if (AbstractDungeon.currMapNode.room instanceof EventRoom) {
+            roomType = TEXT[15];
+            smallImage = "event";
+        } else {
+            roomType = TEXT[16];
+            smallImage = "win";
+        }
+
+        String line1 = P2PManager.GetPlayerCount() + TEXT[22] + TEXT[17] + AbstractDungeon.ascensionLevel + (hasKeys ? TEXT[18] : "");
+        String line2 = AbstractDungeon.player.title.substring(0, 1).toUpperCase() + AbstractDungeon.player.title.substring(1) + " " + TEXT[20] + AbstractDungeon.floorNum + " - " + roomType;
+        String portrait = AbstractDungeon.player.getClass().getSimpleName().toLowerCase().replace("the", "").replace("character", "").replace("char", "").replaceAll(" ", "");
+    
         UpdatePresence(line1, line2, portraits.contains(portrait) ? portrait : "cover", smallImage, true);
     }
 }

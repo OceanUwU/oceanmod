@@ -18,7 +18,6 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.blue.DoomAndGloom;
 import com.megacrit.cardcrawl.cards.curses.Injury;
-import com.megacrit.cardcrawl.cards.green.Backflip;
 import com.megacrit.cardcrawl.cards.green.DaggerSpray;
 import com.megacrit.cardcrawl.cards.purple.Brilliance;
 import com.megacrit.cardcrawl.cards.red.Bash;
