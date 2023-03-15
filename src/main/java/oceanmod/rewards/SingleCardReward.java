@@ -2,9 +2,11 @@ package oceanmod.rewards;
 
 import oceanmod.VisibleCardRewards;
 import oceanmod.patches.visiblecardrewards.CardDeletionPrevention;
+import basemod.ReflectionHacks;
 import basemod.abstracts.CustomReward;
 import basemod.patches.com.megacrit.cardcrawl.cards.AbstractCard.MultiCardPreview;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,6 +28,8 @@ import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.SingingBowl;
 import com.megacrit.cardcrawl.rewards.RewardItem;
+import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
+import com.megacrit.cardcrawl.screens.CombatRewardScreen;
 import com.megacrit.cardcrawl.ui.buttons.SingingBowlButton;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import pansTrinkets.cards.AbstractTrinket;
@@ -43,6 +47,7 @@ import static oceanmod.patches.visiblecardrewards.NewRewardtypePatch.VCR_BOWLREW
 public class SingleCardReward extends CustomReward {
     private static final float XOFFSET = 25f * Settings.scale;
     public static ArrayList<RewardItem> rewardsToRemove = new ArrayList<RewardItem>();
+    public static ArrayList<RewardItem> rewardsToAdd = new ArrayList<RewardItem>();
     public List<SingleCardReward> cardLinks = new ArrayList<>();
     public AbstractCard card;
     public AbstractCard renderCard;
@@ -53,6 +58,7 @@ public class SingleCardReward extends CustomReward {
     private int previewing = 0;
     private Texture rewardTexture;
     public AbstractRelic skipRelic;
+    public boolean converting = false;
 
     public SingleCardReward(AbstractCard c) {
         super((Texture)null, "", VCR_SINGLECARDREWARD);
@@ -110,6 +116,8 @@ public class SingleCardReward extends CustomReward {
 
     @Override
     public boolean claimReward() {
+        if (converting)
+            return true;
         if (isTrinket && ((AbstractTrinket)card).weight + TrinketHelper.carriedWeight(AbstractDungeon.player) > TrinketHelper.maxWeight)
             return false;
         
@@ -157,6 +165,21 @@ public class SingleCardReward extends CustomReward {
                 link.redText = hb.hovered;
             if (InputHelper.justClickedRight && type == VCR_SINGLECARDREWARD)
                 CardCrawlGame.cardPopup.open(renderCard);
+            if (Gdx.input.isKeyJustPressed(Input.Keys.V)) {
+                CardCrawlGame.sound.playV("CARD_OBTAIN", 0.4F);
+                ArrayList<AbstractCard> cards = new ArrayList<>();
+                cards.add(card);
+                for (SingleCardReward link : cardLinks)
+                    cards.add(link.card);
+                rewardsToRemove.add(this);
+                rewardsToRemove.addAll(cardLinks);
+                RewardItem cardReward = new RewardItem(0);
+                cardReward.type = RewardType.CARD;
+                ReflectionHacks.setPrivate(cardReward, RewardItem.class, "isBoss", AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss);
+                cardReward.cards = cards;
+                cardReward.text = RewardItem.TEXT[2];
+                rewardsToAdd.add(cardReward);
+            }
         }
 
         switchPreviewTimer -= Gdx.graphics.getDeltaTime();

@@ -1,6 +1,10 @@
 package oceanmod.patches.visiblecardrewards;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.screens.CombatRewardScreen;
 import oceanmod.rewards.SingleCardReward;
 
@@ -21,6 +25,16 @@ public class RemoveLinkedCards {
 
     public static void Postfix(CombatRewardScreen __instance) {
         __instance.rewards.removeAll(SingleCardReward.rewardsToRemove);
+        SingleCardReward.rewardsToRemove.clear();
+        __instance.rewards.addAll(SingleCardReward.rewardsToAdd);
+        SingleCardReward.rewardsToAdd.clear();
+        for (RewardItem r : __instance.rewards) {
+            if (r.hb.hovered && Gdx.input.isKeyJustPressed(Input.Keys.V)) {
+                ReplaceCardRewards.replaceReward(r);
+                CardCrawlGame.sound.playV("CARD_OBTAIN", 0.4F);
+                break;
+            }
+        }
         __instance.positionRewards();
         try {
             setLabelMethod.invoke(__instance);
