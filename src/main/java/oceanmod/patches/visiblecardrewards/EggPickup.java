@@ -9,10 +9,12 @@ import com.megacrit.cardcrawl.relics.ToxicEgg2;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import oceanmod.rewards.SingleCardReward;
 
+import static oceanmod.patches.visiblecardrewards.NewRewardtypePatch.VCR_SINGLECARDREWARD;
+
 public class EggPickup {
     public static void upgradeAllOfType(AbstractCard.CardType type) {
         for (RewardItem reward : AbstractDungeon.combatRewardScreen.rewards) {
-            if (reward instanceof SingleCardReward) {
+            if (reward instanceof SingleCardReward && reward.type == VCR_SINGLECARDREWARD) {
                 AbstractCard c = (AbstractCard)(((SingleCardReward)reward).card);
                 if (c.type == type && c.canUpgrade() && !c.upgraded) {
                     c.upgrade();

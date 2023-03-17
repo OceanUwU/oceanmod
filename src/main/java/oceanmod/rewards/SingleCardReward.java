@@ -29,7 +29,6 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.SingingBowl;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
-import com.megacrit.cardcrawl.screens.CombatRewardScreen;
 import com.megacrit.cardcrawl.ui.buttons.SingingBowlButton;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import pansTrinkets.cards.AbstractTrinket;
@@ -263,7 +262,7 @@ public class SingleCardReward extends CustomReward {
                 VisibleCardRewards.hoverRewardWorkaround = this;
             }
         } else if (type == VCR_BOWLREWARD) {
-            sb.setColor(Color.WHITE.cpy());
+            sb.setColor(Color.WHITE);
             sb.draw(rewardTexture, RewardItem.REWARD_ITEM_X - 32.0F, this.y - 32.0F - 2.0F * Settings.scale, 32.0F, 32.0F, 64.0F, 64.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 64, 64, false, false);
             FontHelper.renderSmartText(sb, FontHelper.cardDescFont_N, text, Settings.WIDTH * 0.434F, y + 5.0f * Settings.scale, 1000.0f * Settings.scale, 0.0f, Color.WHITE);
         }
