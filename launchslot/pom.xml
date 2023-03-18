@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>launchslotSN</groupId>
+    <artifactId>launchslotSN</artifactId>
+    <version>v1</version>
+    <packaging>jar</packaging>
+
+    <name>Launch Save SlotSN</name>
+    <description>When launcing the game with this mod enabled, save slot number specified in the title will be automatically set on startup.</description>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <Steam.path>D:\Prog\Steam\steamapps</Steam.path>
+        <stsPath>${Steam.path}/common/SlayTheSpire/</stsPath>
+        <workshopFolder>${Steam.path}/workshop/content/646570/</workshopFolder>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.megacrit.cardcrawl</groupId>
+            <artifactId>slaythespire</artifactId>
+            <version>12-22-2020</version>
+            <scope>system</scope>
+            <systemPath>${stsPath}desktop-1.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.evacipated.cardcrawl</groupId>
+            <artifactId>ModTheSpire</artifactId>
+            <version>3.23.4</version>
+            <scope>system</scope>
+            <systemPath>${workshopFolder}1605060445/ModTheSpire.jar</systemPath>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+</project>
