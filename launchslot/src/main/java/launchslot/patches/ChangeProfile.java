@@ -1,4 +1,4 @@
-package launchslot.packages;
+package launchslot.patches;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
