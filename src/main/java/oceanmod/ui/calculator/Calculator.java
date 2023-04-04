@@ -1,6 +1,7 @@
 package oceanmod.ui.calculator;
 
 import basemod.BaseMod;
+import basemod.interfaces.PostUpdateSubscriber;
 import basemod.interfaces.PreUpdateSubscriber;
 import basemod.interfaces.RenderSubscriber;
 import com.badlogic.gdx.Gdx;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-public class Calculator implements RenderSubscriber, PreUpdateSubscriber {
+public class Calculator implements RenderSubscriber, PreUpdateSubscriber, PostUpdateSubscriber {
     private static Texture background = ImageMaster.loadImage(OceanMod.resourcePath("images/calculator/calculator.png"));
     private static Texture display = ImageMaster.loadImage(OceanMod.resourcePath("images/calculator/display.png"));
     public static int width = 300, height = 500;
@@ -34,6 +35,8 @@ public class Calculator implements RenderSubscriber, PreUpdateSubscriber {
     private static FileHandle fontFile = Gdx.files.internal("font/Kreon-Regular.ttf");
     public static BitmapFont font;
     private static DecimalFormat df = new DecimalFormat("#.##");
+    public static boolean anyHovered = false;
+    public static boolean anyPressed = false;
 
     private Hitbox hb;
     private float x, y;
@@ -170,6 +173,15 @@ public class Calculator implements RenderSubscriber, PreUpdateSubscriber {
                 button.move(x, y);
             }
         }
+        if (hb.hovered)
+            anyHovered = true;
+        if (hb.clicked)
+            anyPressed = true;
+    }
+    
+    public void receivePostUpdate() {
+        anyHovered = false;
+        anyPressed = false;
     }
 
     public void receiveRender(SpriteBatch sb) {

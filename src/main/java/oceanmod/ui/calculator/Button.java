@@ -23,6 +23,7 @@ public class Button implements PreUpdateSubscriber, PostUpdateSubscriber {
     ));
     public static Color hoveredMult = new Color(0.9F, 0.9F, 0.9F, 1.0F);
     public static Color pressedMult = new Color(0.7F, 0.7F, 0.7F, 1.0F);
+    public static boolean anyHovered = false;
     public static boolean anyPressed = false;
 
     public Hitbox hb;
@@ -54,8 +55,11 @@ public class Button implements PreUpdateSubscriber, PostUpdateSubscriber {
     
     public void receivePreUpdate() {
         hb.update();
-        if (hb.hovered && InputHelper.justClickedLeft)
-            hb.clickStarted = true;
+        if (hb.hovered) {
+            anyHovered = true;
+            if (InputHelper.justClickedLeft)
+                hb.clickStarted = true;
+        }
         if (hb.clicked) {
             anyPressed = true;
             calculator.pressButton(type);
@@ -64,6 +68,7 @@ public class Button implements PreUpdateSubscriber, PostUpdateSubscriber {
     }
     
     public void receivePostUpdate() {
+        anyHovered = false;
         anyPressed = false;
     }
 
