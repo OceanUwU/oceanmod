@@ -6,7 +6,7 @@
 
     <groupId>oceanmod</groupId>
     <artifactId>oceanmod</artifactId>
-    <version>v1.0.10</version>
+    <version>v1.0.11</version>
     <packaging>jar</packaging>
 
     <name>Ocean's Pencil Case</name>

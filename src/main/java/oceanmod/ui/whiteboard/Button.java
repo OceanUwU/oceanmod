@@ -2,6 +2,8 @@ package oceanmod.ui.whiteboard;
 
 import basemod.BaseMod;
 import basemod.interfaces.PreUpdateSubscriber;
+import oceanmod.OceanMod;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.helpers.Hitbox;
@@ -33,11 +35,13 @@ public abstract class Button implements PreUpdateSubscriber {
     
     public void receivePreUpdate() {
         hb.update();
-        if (hb.hovered && InputHelper.justClickedLeft)
-            hb.clickStarted = true;
-        if (hb.clicked) {
-            onClick();
-            hb.clicked = false;
+        if (OceanMod.whiteboardOpen) {
+            if (hb.hovered && InputHelper.justClickedLeft)
+                hb.clickStarted = true;
+            if (hb.clicked) {
+                onClick();
+                hb.clicked = false;
+            }
         }
     }
 

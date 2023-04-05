@@ -13,7 +13,14 @@
             "g",
             "b",
             "Card rewards can be taken immediately without opening another reward screen.",
-            "Enable calculator (requires restart)"
+            "Enable calculator (requires restart)",
+            "Common",
+            "Uncommon",
+            "Rare",
+            "Basic",
+            "Special",
+            "Status",
+            "Curse"
         ]
     },
 

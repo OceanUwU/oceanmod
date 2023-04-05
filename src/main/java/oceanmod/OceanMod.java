@@ -1,6 +1,8 @@
 package oceanmod;
 
 import basemod.BaseMod;
+import basemod.ModButton;
+import basemod.ModLabel;
 import basemod.ModLabeledToggleButton;
 import basemod.ModMinMaxSlider;
 import basemod.ModPanel;
@@ -26,6 +28,7 @@ import com.megacrit.cardcrawl.cards.tempCards.Miracle;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen;
 
@@ -39,6 +42,7 @@ import java.util.Properties;
 @SpireInitializer
 public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber, RenderSubscriber {
     public static String ID = "oceanmod";
+    public static String[] TEXT;
     private static Properties defaults = new Properties(); 
     public static SpireConfig config;
     public static ModPanel settingsPanel = new ModPanel();
@@ -54,7 +58,13 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
     public static WhiteboardDrawing whiteboardDrawing;
     public static Menu whiteboardMenu;
     public static PanelItem whiteboardPanelItem;
+    public static ModToggleButton borderToggleButton;
+    public static ModMinMaxSlider[] borderColourSliders = {null, null, null};
+    public static ModLabel borderLabel;
+    public static ModButton borderPrevButton;
+    public static ModButton borderNextButton;
     public static boolean whiteboardOpen = false;
+    public static int rarityEditing = 0;
 
     private static AbstractCard[] exampleCards = {null, null, null, null, null, null, null};
 
@@ -111,7 +121,7 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
     }
 
     public void receivePostInitialize() {
-        String[] TEXT = CardCrawlGame.languagePack.getUIString(ID+":badge").TEXT;
+        TEXT = CardCrawlGame.languagePack.getUIString(ID+":badge").TEXT;
         whiteboardPanelItem = new PanelItem();
         if (whiteboardEnabled)
             BaseMod.addTopPanelItem(whiteboardPanelItem);
@@ -163,7 +173,7 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
                 doVisibleRewards = button.enabled;
         }));
 
-        float right = -250 * 3;
+        float right = 400f * Settings.scale;
         configY = 565;
         exampleCards[0] = new DaggerSpray();
         exampleCards[1] = new DoomAndGloom();
@@ -174,30 +184,8 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
         exampleCards[6] = new Injury();
         for (int i = 0; i < BorderColours.rarityStrings.length; i++) {
             exampleCards[i].drawScale = 0.5f;
-            exampleCards[i].current_x = Settings.WIDTH/2 + right * Settings.scale;
+            exampleCards[i].current_x = Settings.WIDTH/2 + right;
             exampleCards[i].current_y = 370;
-            final Integer inI = new Integer(i);
-            settingsPanel.addUIElement(new ModToggleButton(Settings.WIDTH/2 + right - 18F * Settings.scale,configY,config.getBool(BorderColours.rarityStrings[inI]+"e"),false,settingsPanel,(button) -> {
-                config.setBool(BorderColours.rarityStrings[inI]+"e", button.enabled);
-                BorderColours.rarityConfigs[inI] = button.enabled;
-                try {config.save();} catch (Exception e) {}
-            }));
-            for (int j = 0; j < 3; j++) {
-                final Integer inJ = new Integer(j);
-                settingsPanel.addUIElement(new ModMinMaxSlider(
-                    i==0 ?TEXT[7+j] : "",Settings.WIDTH/2 + right - 115F * Settings.scale,configY-15-30*j,0,1,
-                    config.getFloat(BorderColours.rarityStrings[i]+"rgb".charAt(j))," ",settingsPanel,(slider) -> {
-                        config.setFloat(BorderColours.rarityStrings[inI]+"rgb".charAt(inJ), slider.getValue());
-                        Color color = BorderColours.colors[inI];
-                        float[] rgb = {color.r, color.g, color.b};
-                        rgb[inJ] = slider.getValue();
-                        color.set(rgb[0], rgb[1], rgb[2], 1.0F);
-                        try {config.save();} catch (Exception e) {}
-                }));
-            }
-            right += 250;
-        }
-        for (int i = 0; i < BorderColours.rarityStrings.length; i++) {
             BorderColours.rarityConfigs[i] = OceanMod.config.getBool(BorderColours.rarityStrings[i]+"e");
             BorderColours.colors[i] = new Color(
                 OceanMod.config.getFloat(BorderColours.rarityStrings[i]+"r"),
@@ -205,13 +193,51 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
                 OceanMod.config.getFloat(BorderColours.rarityStrings[i]+"b"), 1.0F);
         }
 
+        borderToggleButton = new ModToggleButton(Settings.WIDTH/2 + right - 18F * Settings.scale,configY,false,false,settingsPanel,(button) -> {
+            config.setBool(BorderColours.rarityStrings[rarityEditing]+"e", button.enabled);
+            BorderColours.rarityConfigs[rarityEditing] = button.enabled;
+            try {config.save();} catch (Exception e) {}
+        });
+        settingsPanel.addUIElement(borderToggleButton);
+        for (int j = 0; j < 3; j++) {
+            final Integer inJ = new Integer(j);
+            borderColourSliders[j] = new ModMinMaxSlider(
+                TEXT[7+j],Settings.WIDTH/2 + right - 115F * Settings.scale,configY-15-30*j,0,1,
+                0,null,settingsPanel,(slider) -> {
+                    config.setFloat(BorderColours.rarityStrings[rarityEditing]+"rgb".charAt(inJ), slider.getValue());
+                    Color color = BorderColours.colors[rarityEditing];
+                    float[] rgb = {color.r, color.g, color.b};
+                    rgb[inJ] = slider.getValue();
+                    color.set(rgb[0], rgb[1], rgb[2], 1.0F);
+                    try {config.save();} catch (Exception e) {}
+            });
+            settingsPanel.addUIElement(borderColourSliders[j]);
+        }
+        borderLabel = new ModLabel("", Settings.WIDTH/2 + right, configY + 50f * Settings.scale, settingsPanel, (l)->{});
+        borderPrevButton = new ModButton(Settings.WIDTH / 2 + right - 150f * Settings.scale, configY + 25f * Settings.scale, ImageMaster.CF_LEFT_ARROW, settingsPanel, b -> selectRarity(-1));
+        settingsPanel.addUIElement(borderPrevButton);
+        borderNextButton = new ModButton(Settings.WIDTH / 2 + right + 100f * Settings.scale, configY + 25f * Settings.scale, ImageMaster.CF_RIGHT_ARROW, settingsPanel, b -> selectRarity(1));
+        settingsPanel.addUIElement(borderNextButton);
+
+        selectRarity(0);
+
         BaseMod.registerModBadge(new Texture(resourcePath("images/badge.jpg")), TEXT[0], TEXT[1], TEXT[2], settingsPanel);
     }
 
+    public static void selectRarity(int add) {
+        rarityEditing += add + BorderColours.rarityStrings.length;
+        rarityEditing %= BorderColours.rarityStrings.length;
+        borderLabel.text = TEXT[12+rarityEditing];
+        borderToggleButton.enabled = config.getBool(BorderColours.rarityStrings[rarityEditing]+"e");
+        for (int i = 0; i < borderColourSliders.length; i++)
+            borderColourSliders[i].setValue(config.getFloat(BorderColours.rarityStrings[rarityEditing]+"rgb".charAt(i)));
+    }
+
     public void receiveRender(SpriteBatch sb) {
-        if (settingsPanel.isUp)
-            for (AbstractCard i : exampleCards)
-                i.render(sb);
+        if (settingsPanel.isUp) {
+            exampleCards[rarityEditing].render(sb);
+            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, borderLabel.text, borderLabel.x, borderLabel.y);
+        }
     }
 
     public static String resourcePath(String path) {
