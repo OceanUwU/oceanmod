@@ -20,7 +20,8 @@
             "Basic",
             "Special",
             "Status",
-            "Curse"
+            "Curse",
+            "Allow pressing F10 to restart ModTheSpire."
         ]
     },
 

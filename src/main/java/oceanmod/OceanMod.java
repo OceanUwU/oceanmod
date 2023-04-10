@@ -53,6 +53,7 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
 
     public static boolean doVisibleRewards;
     public static boolean doCalculator;
+    public static boolean canRestart;
 
     public static boolean whiteboardEnabled;
     public static WhiteboardDrawing whiteboardDrawing;
@@ -76,6 +77,7 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
         defaults.setProperty("middle", "false");
         defaults.setProperty("discord", "true");
         defaults.setProperty("visiblerewards", "true");
+        defaults.setProperty("restartable", "false");
         defaults.setProperty("coe", "false");
         defaults.setProperty("cor", "0");
         defaults.setProperty("cog", "0");
@@ -107,6 +109,7 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
         config = new SpireConfig(ID, "config", defaults);
         whiteboardEnabled = config.getBool("whiteboard");
         doVisibleRewards = config.getBool("visiblerewards");
+        canRestart = config.getBool("restartable");
         doCalculator = config.getBool("calculator");
         BaseMod.subscribe(new OceanMod());
     }
@@ -171,6 +174,14 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
                 config.setBool("visiblerewards", button.enabled);
                 try {config.save();} catch (Exception e) {}
                 doVisibleRewards = button.enabled;
+        }));
+        configY -= configStep;
+        settingsPanel.addUIElement(new ModLabeledToggleButton(
+            TEXT[19],                         configX,configY,Settings.CREAM_COLOR,FontHelper.charDescFont,
+            config.getBool("restartable"), settingsPanel,(label) -> {},(button) -> {
+                config.setBool("restartable", button.enabled);
+                try {config.save();} catch (Exception e) {}
+                canRestart = button.enabled;
         }));
 
         float right = 400f * Settings.scale;
