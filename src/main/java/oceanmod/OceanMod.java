@@ -78,6 +78,7 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
         defaults.setProperty("discord", "true");
         defaults.setProperty("visiblerewards", "true");
         defaults.setProperty("restartable", "false");
+        defaults.setProperty("cursesalwayscurses", "false");
         defaults.setProperty("coe", "false");
         defaults.setProperty("cor", "0");
         defaults.setProperty("cog", "0");
@@ -183,6 +184,14 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
                 try {config.save();} catch (Exception e) {}
                 canRestart = button.enabled;
         }));
+        configY -= configStep;
+        settingsPanel.addUIElement(new ModLabeledToggleButton(
+            TEXT[20],                         configX,configY,Settings.CREAM_COLOR,FontHelper.charDescFont,
+            config.getBool("cursesalwayscurses"), settingsPanel,(label) -> {},(button) -> {
+                config.setBool("cursesalwayscurses", button.enabled);
+                try {config.save();} catch (Exception e) {}
+                BorderColours.cursesAlwaysCurses = button.enabled;
+        }));
 
         float right = 400f * Settings.scale;
         configY = 565;
@@ -193,6 +202,7 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
         exampleCards[4] = new Miracle();
         exampleCards[5] = new Dazed();
         exampleCards[6] = new Injury();
+        BorderColours.cursesAlwaysCurses = OceanMod.config.getBool("cursesalwayscurses");
         for (int i = 0; i < BorderColours.rarityStrings.length; i++) {
             exampleCards[i].drawScale = 0.5f;
             exampleCards[i].current_x = Settings.WIDTH/2 + right;

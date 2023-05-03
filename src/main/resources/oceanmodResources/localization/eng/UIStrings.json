@@ -21,7 +21,8 @@
             "Special",
             "Status",
             "Curse",
-            "Allow pressing F10 to restart ModTheSpire."
+            "Allow pressing F10 to restart ModTheSpire.",
+            "Curses ALWAYS use the curse frame, never special."
         ]
     },
 

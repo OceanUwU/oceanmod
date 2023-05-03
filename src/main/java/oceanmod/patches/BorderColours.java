@@ -17,6 +17,7 @@ public class BorderColours {
     public static String[] rarityStrings = {"co", "un", "ra", "ba", "sp", "st", "cu"};
     public static boolean[] rarityConfigs = new boolean[rarityStrings.length];
     public static Color[] colors = new Color[rarityStrings.length];
+    public static boolean cursesAlwaysCurses;
 
     private static TextureAtlas ucbCardUiAtlas;
     private static TextureAtlas.AtlasRegion FRAME_ATTACK;
@@ -70,6 +71,7 @@ public class BorderColours {
             case CURSE: n = 6; break;
         }
         if (c.type == AbstractCard.CardType.STATUS) n = 5;
+        if (cursesAlwaysCurses && c.color == AbstractCard.CardColor.CURSE) n = 6;
         if (n == -1) return null;
         if (rarityConfigs[n]) return colors[n];
         return null;
