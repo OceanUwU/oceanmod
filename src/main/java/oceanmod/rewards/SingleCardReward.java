@@ -3,7 +3,10 @@ package oceanmod.rewards;
 import oceanmod.VisibleCardRewards;
 import oceanmod.patches.visiblecardrewards.CardDeletionPrevention;
 import basemod.ReflectionHacks;
+import basemod.abstracts.AbstractCardModifier;
 import basemod.abstracts.CustomReward;
+import basemod.helpers.CardModifierManager;
+import basemod.helpers.TooltipInfo;
 import basemod.patches.com.megacrit.cardcrawl.cards.AbstractCard.MultiCardPreview;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -275,10 +278,13 @@ public class SingleCardReward extends CustomReward {
 
     private void renderCardKeywordTips(SpriteBatch sb) {
         ArrayList<PowerTip> t = new ArrayList<>();
-        for (String s : renderCard.keywords) {
+        for (String s : renderCard.keywords)
             if (!s.equals("[R]") && !s.equals("[G]") && !s.equals("[B]") && !s.equals("[W]") && !s.equals("[E]"))
-                t.add(new PowerTip(TipHelper.capitalize(s), (String)GameDictionary.keywords.get(s))); 
-        } 
+                t.add(new PowerTip(TipHelper.capitalize(s), (String)GameDictionary.keywords.get(s)));
+        for (AbstractCardModifier modifier : CardModifierManager.modifiers(renderCard))
+            for (TooltipInfo tooltip : modifier.additionalTooltips(renderCard))
+                if (!tooltip.title.equals("[R]") && !tooltip.title.equals("[G]") && !tooltip.title.equals("[B]") && !tooltip.title.equals("[W]") && !tooltip.title.equals("[E]"))
+                    t.add(new PowerTip(TipHelper.capitalize(tooltip.title), tooltip.description));
         if (!t.isEmpty()) {
             TipHelper.queuePowerTips(renderCard.current_x + renderCard.hb.width * 0.6F, renderCard.current_y + renderCard.hb.height * 0.38F, t); 
             TipHelper.render(sb);
