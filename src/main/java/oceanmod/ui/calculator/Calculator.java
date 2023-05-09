@@ -1,9 +1,5 @@
 package oceanmod.ui.calculator;
 
-import basemod.BaseMod;
-import basemod.interfaces.PostUpdateSubscriber;
-import basemod.interfaces.PreUpdateSubscriber;
-import basemod.interfaces.RenderSubscriber;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -25,7 +21,7 @@ import java.util.ArrayList;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-public class Calculator implements RenderSubscriber, PreUpdateSubscriber, PostUpdateSubscriber {
+public class Calculator {
     private static Texture background = ImageMaster.loadImage(OceanMod.resourcePath("images/calculator/calculator.png"));
     private static Texture display = ImageMaster.loadImage(OceanMod.resourcePath("images/calculator/display.png"));
     public static int width = 300, height = 500;
@@ -86,17 +82,6 @@ public class Calculator implements RenderSubscriber, PreUpdateSubscriber, PostUp
         buttons.add(closeButton);
 
         if (font == null) setupFont();
-
-        BaseMod.subscribe(this);
-    }
-
-    public void close() {
-        for (Button button : buttons) {
-            button.remove();
-        }
-        buttons.clear();
-        CalculatorManager.calculators.remove(this);
-        BaseMod.unsubscribeLater(this);
     }
 
     public void addToExpr(String text, boolean isNum) {
@@ -151,17 +136,22 @@ public class Calculator implements RenderSubscriber, PreUpdateSubscriber, PostUp
                 break;
             case 2: evaluate();
                 break;
-            case 20: close();
+            case 20: CalculatorManager.calculators.remove(this);
                 break;
         }
     }
 
-    public void receivePreUpdate() {
+    public void update() {
+        for (Button b : buttons)
+            b.update();
         hb.update();
         if (hb.hovered && InputHelper.justClickedLeft) {
             startX = InputHelper.mX;
             startY = InputHelper.mY;
             hb.clickStarted = true;
+        } else if (!InputHelper.isMouseDown) {
+            hb.clickStarted = false;
+            hb.clicked = false;
         }
         if (hb.clickStarted) {
             x += InputHelper.mX - startX;
@@ -169,9 +159,8 @@ public class Calculator implements RenderSubscriber, PreUpdateSubscriber, PostUp
             hb.translate(x, y);
             startX = InputHelper.mX;
             startY = InputHelper.mY;
-            for (Button button : buttons) {
+            for (Button button : buttons)
                 button.move(x, y);
-            }
         }
         if (hb.hovered)
             anyHovered = true;
@@ -179,12 +168,13 @@ public class Calculator implements RenderSubscriber, PreUpdateSubscriber, PostUp
             anyPressed = true;
     }
     
-    public void receivePostUpdate() {
+    public static void postUpdate() {
         anyHovered = false;
         anyPressed = false;
+        Button.postUpdate();
     }
 
-    public void receiveRender(SpriteBatch sb) {
+    public void render(SpriteBatch sb) {
         sb.setColor(color);
         sb.draw(background, x, y);
         sb.draw(display, x+13, y+height-112);

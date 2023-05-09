@@ -1,8 +1,6 @@
 package oceanmod.ui.calculator;
 
 import basemod.BaseMod;
-import basemod.interfaces.PostUpdateSubscriber;
-import basemod.interfaces.PreUpdateSubscriber;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,7 +13,7 @@ import oceanmod.OceanMod;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Button implements PreUpdateSubscriber, PostUpdateSubscriber {
+public class Button {
     private static Texture texture = ImageMaster.loadImage(OceanMod.resourcePath("images/calculator/button.png"));
     private static int width = 64, height = 64;
     public static ArrayList<String> texts = new ArrayList<>(Arrays.asList(
@@ -39,12 +37,6 @@ public class Button implements PreUpdateSubscriber, PostUpdateSubscriber {
         text = texts.get(type);
         calculator = setCalculator;
         hb = new Hitbox(x, y, width, height);
-
-        BaseMod.subscribe(this);
-    }
-
-    public void remove() {
-        BaseMod.unsubscribeLater(this);
     }
     
     public void move(float newX, float newY) {
@@ -53,7 +45,7 @@ public class Button implements PreUpdateSubscriber, PostUpdateSubscriber {
         hb.translate(x, y);
     }
     
-    public void receivePreUpdate() {
+    public void update() {
         hb.update();
         if (hb.hovered) {
             anyHovered = true;
@@ -67,7 +59,7 @@ public class Button implements PreUpdateSubscriber, PostUpdateSubscriber {
         }
     }
     
-    public void receivePostUpdate() {
+    public static void postUpdate() {
         anyHovered = false;
         anyPressed = false;
     }
