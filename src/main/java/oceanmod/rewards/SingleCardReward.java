@@ -281,10 +281,13 @@ public class SingleCardReward extends CustomReward {
         for (String s : renderCard.keywords)
             if (!s.equals("[R]") && !s.equals("[G]") && !s.equals("[B]") && !s.equals("[W]") && !s.equals("[E]"))
                 t.add(new PowerTip(TipHelper.capitalize(s), (String)GameDictionary.keywords.get(s)));
-        for (AbstractCardModifier modifier : CardModifierManager.modifiers(renderCard))
-            for (TooltipInfo tooltip : modifier.additionalTooltips(renderCard))
-                if (!tooltip.title.equals("[R]") && !tooltip.title.equals("[G]") && !tooltip.title.equals("[B]") && !tooltip.title.equals("[W]") && !tooltip.title.equals("[E]"))
-                    t.add(new PowerTip(TipHelper.capitalize(tooltip.title), tooltip.description));
+        for (AbstractCardModifier modifier : CardModifierManager.modifiers(renderCard)) {
+            List<TooltipInfo> tooltips = modifier.additionalTooltips(renderCard);
+            if (tooltips != null)
+                for (TooltipInfo tooltip : tooltips)
+                    if (!tooltip.title.equals("[R]") && !tooltip.title.equals("[G]") && !tooltip.title.equals("[B]") && !tooltip.title.equals("[W]") && !tooltip.title.equals("[E]"))
+                        t.add(new PowerTip(TipHelper.capitalize(tooltip.title), tooltip.description));
+        }
         if (!t.isEmpty()) {
             TipHelper.queuePowerTips(renderCard.current_x + renderCard.hb.width * 0.6F, renderCard.current_y + renderCard.hb.height * 0.38F, t); 
             TipHelper.render(sb);
