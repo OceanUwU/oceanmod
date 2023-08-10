@@ -23,7 +23,7 @@ import static oceanmod.patches.visiblecardrewards.NewRewardtypePatch.VCR_SINGLEC
 
 @SpirePatch(clz=CombatRewardScreen.class, method="setupItemReward")
 public class ReplaceCardRewards {
-    public static ArrayList<String> rewardsToReplace = new ArrayList<String>(Arrays.asList("CARD", "DAZINGPULSE", "DECABEAM", "DONUBEAM", "EXPLODE", "SPIKE", "BOSSCARD", "JAXCARD", "UPGRADEDUNKNOWNCARD", "SEALCARD", "GEM", "GEMALLRARITIES", "PANS_TRINKET_TRINKET_REWARD"));
+    public static ArrayList<String> rewardsToReplace = new ArrayList<String>(Arrays.asList("CARD", "DAZINGPULSE", "DECABEAM", "DONUBEAM", "EXPLODE", "SPIKE", "BOSSCARD", "JAXCARD", "UPGRADEDUNKNOWNCARD", "SEALCARD", "GEM", "GEMALLRARITIES", "PANS_TRINKET_TRINKET_REWARD", "JUNKCARDREWARD"));
 
     public static void Postfix(CombatRewardScreen __instance) {
         if (!OceanMod.doVisibleRewards) return;
@@ -46,24 +46,25 @@ public class ReplaceCardRewards {
             ArrayList<SingleCardReward> cardOptions = new ArrayList<SingleCardReward>();
 
             if (Loader.isModLoaded("PansTrinkets") && reward.type == TrinketRewardTypePatch.PANS_TRINKET_TRINKET_REWARD) {
+                RewardItem[] from = new RewardItem[]{((TrinketReward)reward).linkedReward, reward};
                 for (AbstractCard c : ((TrinketReward)reward).linkedReward.cards)
-                    cardOptions.add(new SingleCardReward(c));
+                    cardOptions.add(new SingleCardReward(from, c));
                 for (AbstractCard c : reward.cards) {
-                    SingleCardReward scr = new SingleCardReward(c);
+                    SingleCardReward scr = new SingleCardReward(from, c);
                     scr.isTrinket = true;
                     cardOptions.add(scr);
                 }
                 rewardsToRemove.add(((TrinketReward)reward).linkedReward);
             } else {
                 for (AbstractCard c : reward.cards)
-                    cardOptions.add(new SingleCardReward(c));
+                    cardOptions.add(new SingleCardReward(new RewardItem[]{reward}, c));
             }
 
             for (AbstractRelic r : AbstractDungeon.player.relics) {
                 if (r instanceof SingingBowl)
-                    cardOptions.add(new SingleCardReward(SingingBowlButton.TEXT[2], ImageMaster.TP_HP, r));
+                    cardOptions.add(new SingleCardReward(new RewardItem[]{reward}, SingingBowlButton.TEXT[2], ImageMaster.TP_HP, r));
                 if (Loader.isModLoaded("stslib") && CardRewardSkipButtonRelic.class.isAssignableFrom(r.getClass()))
-                    cardOptions.add(new SingleCardReward(((CardRewardSkipButtonRelic)r).getButtonLabel(), ImageMaster.TICK, r));
+                    cardOptions.add(new SingleCardReward(new RewardItem[]{reward}, ((CardRewardSkipButtonRelic)r).getButtonLabel(), ImageMaster.TICK, r));
             }
             
             for (SingleCardReward option : cardOptions) {

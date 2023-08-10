@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 
 public class DiscordClient {
     public static long startTime = -1L;
-    public static ArrayList<String> portraits = new ArrayList<String>(Arrays.asList("ironclad", "silent", "defect", "watcher", "hermit", "slimebound", "guardian", "hexaghost", "champ", "automaton", "gremlin", "snecko", "unchained"));
+    public static ArrayList<String> portraits = new ArrayList<String>(Arrays.asList("ironclad", "silent", "defect", "watcher", "hermit", "slimebound", "guardian", "hexaghost", "champ", "automaton", "gremlin", "snecko", "unchained", "cranky", "rodent"));
     private static final String[] TEXT = CardCrawlGame.languagePack.getUIString(OceanMod.ID+":discord").TEXT;
     private static final boolean enabled = OceanMod.config.getBool("discord");
 

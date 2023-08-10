@@ -2,7 +2,6 @@ package oceanmod.rewards;
 
 import oceanmod.VisibleCardRewards;
 import oceanmod.patches.visiblecardrewards.CardDeletionPrevention;
-import basemod.ReflectionHacks;
 import basemod.abstracts.AbstractCardModifier;
 import basemod.abstracts.CustomReward;
 import basemod.helpers.CardModifierManager;
@@ -31,7 +30,6 @@ import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.SingingBowl;
 import com.megacrit.cardcrawl.rewards.RewardItem;
-import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.ui.buttons.SingingBowlButton;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import pansTrinkets.cards.AbstractTrinket;
@@ -61,18 +59,21 @@ public class SingleCardReward extends CustomReward {
     private Texture rewardTexture;
     public AbstractRelic skipRelic;
     public boolean converting = false;
+    public RewardItem[] originalRewards;
 
-    public SingleCardReward(AbstractCard c) {
+    public SingleCardReward(RewardItem[] originalRewards, AbstractCard c) {
         super((Texture)null, "", VCR_SINGLECARDREWARD);
         card = c;
+        this.originalRewards = originalRewards;
         init();
     }
 
-    public SingleCardReward(String buttonText, Texture texture, AbstractRelic relic) {
+    public SingleCardReward(RewardItem[] originalRewards, String buttonText, Texture texture, AbstractRelic relic) {
         super((Texture)null, "", VCR_BOWLREWARD);
         text = buttonText;
         rewardTexture = texture;
         skipRelic = relic;
+        this.originalRewards = originalRewards;
         init();
     }
 
@@ -169,18 +170,10 @@ public class SingleCardReward extends CustomReward {
                 CardCrawlGame.cardPopup.open(renderCard);
             if (Gdx.input.isKeyJustPressed(Input.Keys.V)) {
                 CardCrawlGame.sound.playV("CARD_OBTAIN", 0.4F);
-                ArrayList<AbstractCard> cards = new ArrayList<>();
-                cards.add(card);
-                for (SingleCardReward link : cardLinks)
-                    cards.add(link.card);
                 rewardsToRemove.add(this);
                 rewardsToRemove.addAll(cardLinks);
-                RewardItem cardReward = new RewardItem(0);
-                cardReward.type = RewardType.CARD;
-                ReflectionHacks.setPrivate(cardReward, RewardItem.class, "isBoss", AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss);
-                cardReward.cards = cards;
-                cardReward.text = RewardItem.TEXT[2];
-                rewardsToAdd.add(cardReward);
+                for (RewardItem r : originalRewards)
+                    rewardsToAdd.add(r);
             }
         }
 

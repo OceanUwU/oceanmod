@@ -30,6 +30,7 @@ public class RemoveLinkedCards {
         SingleCardReward.rewardsToAdd.clear();
         for (RewardItem r : __instance.rewards) {
             if (r.hb.hovered && Gdx.input.isKeyJustPressed(Input.Keys.V)) {
+                r.hb.hovered = false;
                 ReplaceCardRewards.replaceReward(r);
                 CardCrawlGame.sound.playV("CARD_OBTAIN", 0.4F);
                 break;

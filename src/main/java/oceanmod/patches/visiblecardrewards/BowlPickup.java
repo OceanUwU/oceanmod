@@ -48,13 +48,12 @@ public class BowlPickup {
                         if (!((SingleCardReward)reward).isLast()) continue;
                         SingleCardReward skipReward;
                         if (bowlPickedUp)
-                            skipReward = new SingleCardReward(SingingBowlButton.TEXT[2], ImageMaster.TP_HP, AbstractDungeon.player.getRelic("Singing Bowl"));
+                            skipReward = new SingleCardReward(((SingleCardReward)reward).cardLinks.get(0).originalRewards, SingingBowlButton.TEXT[2], ImageMaster.TP_HP, AbstractDungeon.player.getRelic("Singing Bowl"));
                         else
-                            skipReward = new SingleCardReward(((CardRewardSkipButtonRelic)skipRelic).getButtonLabel(), ImageMaster.TICK, skipRelic);
+                            skipReward = new SingleCardReward(((SingleCardReward)reward).cardLinks.get(0).originalRewards, ((CardRewardSkipButtonRelic)skipRelic).getButtonLabel(), ImageMaster.TICK, skipRelic);
                         skipReward.addCardLink((SingleCardReward)reward);
-                        for (SingleCardReward link : ((SingleCardReward)reward).cardLinks) {
+                        for (SingleCardReward link : ((SingleCardReward)reward).cardLinks)
                             skipReward.addCardLink(link);
-                        }
                         AbstractDungeon.combatRewardScreen.rewards.add(index, skipReward);
                         AbstractDungeon.combatRewardScreen.positionRewards();
                         Postfix(__instance);
