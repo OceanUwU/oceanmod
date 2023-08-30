@@ -1,158 +1,158 @@
 {
   "A Thousand Cuts": {
-    "NAME": "A Thousand Cuts",
-    "DESCRIPTION": "Whenever you play a card, deal !M! damage to ALL enemies."
+    "NAME": "Mil Toriad",
+    "DESCRIPTION": "Pryd bynnach rydych chi'n chwarae cerdyn, gwnewch !M! niwed i BOB gelyn."
   },
   "Accuracy": {
-    "NAME": "Accuracy",
-    "DESCRIPTION": "*Shivs deal !M! additional damage."
+    "NAME": "Cywirdeb",
+    "DESCRIPTION": "Mae *Dagrau yn gwneud !M! niwed ychwanegol."
   },
   "Acrobatics": {
-    "NAME": "Acrobatics",
-    "DESCRIPTION": "Draw !M! cards. NL Discard 1 card."
+    "NAME": "Acrobatiaeth",
+    "DESCRIPTION": "Tynnwch !M! cerdyn. NL Taflwch 1 cerdyn."
   },
   "Adrenaline": {
-    "NAME": "Adrenaline",
-    "DESCRIPTION": "Gain [G]. NL Draw 2 cards. NL Exhaust.",
-    "UPGRADE_DESCRIPTION": "Gain [G] [G]. NL Draw 2 cards. NL Exhaust."
+    "NAME": "Adrenalin",
+    "DESCRIPTION": "Cefwch [G]. NL Tynnwch 2 cerdyn. NL Dihysbyddwch.",
+    "UPGRADE_DESCRIPTION": "Cefwch [G] [G]. NL Tynnwch 2 cerdyn. NL Dihysbyddwch."
   },
   "After Image": {
-    "NAME": "After Image",
+    "NAME": "Ôl-ddelwedd",
     "DESCRIPTION": "Whenever you play a card, gain 1 Block.",
     "UPGRADE_DESCRIPTION": "Innate. NL Whenever you play a card, gain 1 Block."
   },
   "Aggregate": {
-    "NAME": "Aggregate",
-    "DESCRIPTION": "Gain [B] for every !M! cards in your draw pile."
+    "NAME": "Cydgasglu",
+    "DESCRIPTION": "Cefwch [B] ar gyfer pob !M! cerdyn yn dy bentwr tyniad."
   },
   "All For One": {
-    "NAME": "All for One",
-    "DESCRIPTION": "Deal !D! damage. NL Put all cost 0 cards from your discard pile into your hand."
+    "NAME": "Gyd am Un",
+    "DESCRIPTION": "Gwnewch !D! niwed. NL Dychwelwch bob cerdyn pris 0 o dy pentwr taflu i dy law."
   },
   "All Out Attack": {
-    "NAME": "All-Out Attack",
-    "DESCRIPTION": "Deal !D! damage to ALL enemies. NL Discard 1 card at random."
+    "NAME": "Ymosodiad Llwyr",
+    "DESCRIPTION": "Gwnewch !D! niwed i BOB gelyn. NL Taflwch 1 cerdyn ar hap."
   },
   "Allocate": {
-    "NAME": "Allocate",
-    "DESCRIPTION": "Gain !M! Focus. NL Lose 1 Strength. NL Lose 1 Dexterity."
+    "NAME": "Dyrannu",
+    "DESCRIPTION": "Cefwch !M! Canolbwyntiad. NL Collwch 1 Cryfder. NL Collwch 1 Deheurwydd."
   },
   "Amplify": {
-    "NAME": "Amplify",
-    "DESCRIPTION": "This turn, your next Power card is played twice.",
-    "UPGRADE_DESCRIPTION": "This turn, your next !M! Power cards are played twice."
+    "NAME": "Chwyddleisio",
+    "DESCRIPTION": "Tro yma, bydd dy gerdyn Pŵer nesaf yn chwarae dwywaith.",
+    "UPGRADE_DESCRIPTION": "Tro yma, bydd dy !M! cerdyn Pŵer nesaf yn chwarae dwywaith."
   },
   "Anger": {
-    "NAME": "Anger",
-    "DESCRIPTION": "Deal !D! damage. NL Add a copy of this card into your discard pile."
+    "NAME": "Gwylltineb",
+    "DESCRIPTION": "Gwnewch !D! niwed. NL Rhowch gopi o'r cerdyn yma yn dy bentwr tyniad."
   },
   "Apotheosis": {
-    "NAME": "Apotheosis",
-    "DESCRIPTION": "Upgrade ALL your cards for the rest of combat. NL Exhaust."
+    "NAME": "Dwyfoliad",
+    "DESCRIPTION": "Uwchraddiwch BOB un o dy gardiau ar gyfer gweddill y brwydr. Dihysbyddwch."
   },
   "Armaments": {
-    "NAME": "Armaments",
-    "DESCRIPTION": "Gain !B! Block. NL Upgrade a card in your hand for the rest of combat.",
-    "UPGRADE_DESCRIPTION": "Gain !B! Block. NL Upgrade all cards in your hand for the rest of combat."
+    "NAME": "Arfogaethau",
+    "DESCRIPTION": "Cefwch !B! Ataliad. NL Uwchraddwch gerdyn yn dy law ar gyfer gweddill y brwydr.",
+    "UPGRADE_DESCRIPTION": "Cefwch !B! Ataliad. NL Uwchraddwch bob cerdyn yn dy law ar gyfer gweddill y brwydr."
   },
   "AscendersBane": {
-    "NAME": "Ascender's Bane",
-    "DESCRIPTION": "Unplayable. NL Ethereal. NL Cannot be removed from your deck."
+    "NAME": "Pla'r Dringwr",
+    "DESCRIPTION": "Anchwaraeadwy. NL Etheraidd. NL Ni allwch waredi hyn o dy ddec."
   },
   "Auto Shields": {
-    "NAME": "Auto-Shields",
-    "DESCRIPTION": "If you have no Block, gain !B! Block."
+    "NAME": "Tariannau Awtomatig",
+    "DESCRIPTION": "Os nad oes gennych Ataliad, cefwch !B! Ataliad."
   },
   "Axe Kick": {
-    "NAME": "Axe Kick",
-    "DESCRIPTION": "Deal !D! damage. NL Evoke your next Orb."
+    "NAME": "Cic Bwyell",
+    "DESCRIPTION": "Gwnewch !D! niwed. NL Ysgogwch dy belen nesaf."
   },
   "Backflip": {
-    "NAME": "Backflip",
-    "DESCRIPTION": "Gain !B! Block. NL Draw 2 cards."
+    "NAME": "Cefnfflip",
+    "DESCRIPTION": "Cefwch !B! Ataliad. NL Tynnwch 2 cerdyn."
   },
   "Backstab": {
-    "NAME": "Backstab",
-    "DESCRIPTION": "Innate. NL Deal !D! damage. NL Exhaust."
+    "NAME": "Cefn-drywaniad",
+    "DESCRIPTION": "Cynhenid. NL Gwnewch !D! niwed. NL Dihysbyddwch."
   },
   "Ball Lightning": {
-    "NAME": "Ball Lightning",
-    "DESCRIPTION": "Deal !D! damage. Channel !M! Lightning."
+    "NAME": "Mellt Pêl",
+    "DESCRIPTION": "Gwnewch !D! niwed. Sianelwch !M! Mellt."
   },
   "Bandage Up": {
-    "NAME": "Bandage Up",
-    "DESCRIPTION": "Heal !M! HP. NL Exhaust."
+    "NAME": "Rhwymynnu",
+    "DESCRIPTION": "Ymiachwch !M! HP. NL Dihysbyddwch."
   },
   "Bane": {
-    "NAME": "Bane",
-    "DESCRIPTION": "Deal !D! damage. NL If the enemy has Poison, deal !D! damage again."
+    "NAME": "Pla",
+    "DESCRIPTION": "Gwnewch !D! niwed. NL Os oes gan y gelyn gwenwyn, gwnewch !D! niwed eto."
   },
   "Barrage": {
-    "NAME": "Barrage",
-    "DESCRIPTION": "Deal !D! damage for each Channeled Orb."
+    "NAME": "Peledu",
+    "DESCRIPTION": "Gwnewch !D! niwed ar gyfer pob pelen sydd wedi ei Sianeli."
   },
   "Barricade": {
-    "NAME": "Barricade",
-    "DESCRIPTION": "Block is not removed at the start of your turn."
+    "NAME": "Gwrthglawdd",
+    "DESCRIPTION": "Nid ydy Ataliad yn cael ei waredi ar ddechrau dy dro."
   },
   "Bash": {
-    "NAME": "Bash",
-    "DESCRIPTION": "Deliwch !D! damage. NL Apply !M! Vulnerable."
+    "NAME": "Bwrw",
+    "DESCRIPTION": "Gwnewch !D! niwed. NL Dodwch !M! Bregus."
   },
   "Battle Trance": {
-    "NAME": "Battle Trance",
-    "DESCRIPTION": "Draw !M! cards. NL You cannot draw additional cards this turn."
+    "NAME": "Llesmair Ymladdfa",
+    "DESCRIPTION": "Tynnwch !M! cerdyn. NL Ni allwch dynnu unrhyw cardiau ychwanegol tro hyn."
   },
   "Beam Cell": {
-    "NAME": "Beam Cell",
-    "DESCRIPTION": "Deal !D! damage. NL Apply !M! Vulnerable."
+    "NAME": "Pelydr Cell",
+    "DESCRIPTION": "Gwnewch !D! niwed. NL Dodwch !M! Bregus."
   },
   "Berserk": {
-    "NAME": "Berserk",
-    "DESCRIPTION": "Gain !M! Vulnerable. NL At the start of your turn, gain [R]."
+    "NAME": "Gwyllt",
+    "DESCRIPTION": "Cefwch !M! Bregus. NL Ar ddechrau dy dro, cefwch [R]."
   },
   "Biased Cognition": {
-    "NAME": "Biased Cognition",
-    "DESCRIPTION": "Gain !M! Focus. NL At the start of your turn, lose 1 Focus."
+    "NAME": "Dirnadaeth Unochrog",
+    "DESCRIPTION": "Cefwch !M! Canolbwyntiad. NL Ar ddechrau dy dro, collwch 1 Canolbwyntiad."
   },
   "Bite": {
-    "NAME": "Bite",
-    "DESCRIPTION": "Deal !D! damage. NL Heal !M! HP."
+    "NAME": "Cnoi",
+    "DESCRIPTION": "Gwnewch !D! niwed. NL Ymiachwch !M! HP."
   },
   "Blade Dance": {
-    "NAME": "Blade Dance",
-    "DESCRIPTION": "Add !M! *Shivs into your hand."
+    "NAME": "Dawns Llafn",
+    "DESCRIPTION": "Rhowch !M! *Dagrau i fewn i dy law."
   },
   "Blaster": {
     "NAME": "Blaster",
     "DESCRIPTION": "deprecated"
   },
   "Blind": {
-    "NAME": "Blind",
-    "DESCRIPTION": "Apply !M! Weak.",
-    "UPGRADE_DESCRIPTION": "Apply !M! Weak to ALL enemies."
+    "NAME": "Dallu",
+    "DESCRIPTION": "Dodwch !M! Gwan.",
+    "UPGRADE_DESCRIPTION": "Dodwch !M! Gwan ar BOB gelyn."
   },
   "Blizzard": {
-    "NAME": "Blizzard",
-    "DESCRIPTION": "Deal damage equal to !M! times the number of Frost Channeled this combat to ALL enemies.",
+    "NAME": "Lluwchwynt",
+    "DESCRIPTION": "Gwnewch niwed yn gyfartal i !M! waith y nifer o Rhew sydd wedi ei Sianeli y brwydr hon i BOB gelyn.",
     "UPGRADE_DESCRIPTION": "",
     "EXTENDED_DESCRIPTION": [
-      " NL (Deals !D! damage.)",
+      " NL (Yn gwneud !D! niwed.)",
       ""
     ]
   },
   "Blood for Blood": {
-    "NAME": "Blood for Blood",
-    "DESCRIPTION": "Costs 1 less [R] NL for each time you lose HP this combat. NL Deal !D! damage."
+    "NAME": "Gwaed ar gyfer Gwaed",
+    "DESCRIPTION": "Mae hyn yn costio 1 llai [R] ar gyfer pob tro collaist HP y brwydr hon. NL Gwnewch !D! niwed."
   },
   "Bloodletting": {
-    "NAME": "Bloodletting",
-    "DESCRIPTION": "Lose 3 HP. NL Gain [R] [R].",
-    "UPGRADE_DESCRIPTION": "Lose 3 HP. NL Gain [R] [R] [R]."
+    "NAME": "Tywallt Gwaed",
+    "DESCRIPTION": "Collwch 3 HP. NL Cefwch [R] [R].",
+    "UPGRADE_DESCRIPTION": "Collwch 3 HP. NL Cefwch [R] [R] [R]."
   },
   "Bludgeon": {
-    "NAME": "Bludgeon",
-    "DESCRIPTION": "Deal !D! damage."
+    "NAME": "Ffonodio",
+    "DESCRIPTION": "Gwnewch !D! niwed."
   },
   "Blur": {
     "NAME": "Blur",
