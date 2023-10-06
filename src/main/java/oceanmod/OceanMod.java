@@ -55,6 +55,7 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
     public static boolean doCalculator;
     public static boolean canRestart;
 
+    public static boolean hasInitialized = false;
     public static boolean whiteboardEnabled;
     public static WhiteboardDrawing whiteboardDrawing;
     public static Menu whiteboardMenu;
@@ -65,6 +66,7 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
     public static ModButton borderPrevButton;
     public static ModButton borderNextButton;
     public static boolean whiteboardOpen = false;
+    public static boolean noController;
     public static int rarityEditing = 0;
 
     private static AbstractCard[] exampleCards = {null, null, null, null, null, null, null};
@@ -76,9 +78,10 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
         defaults.setProperty("size", "1");
         defaults.setProperty("middle", "false");
         defaults.setProperty("discord", "true");
-        defaults.setProperty("visiblerewards", "true");
+        defaults.setProperty("visiblerewards", "false");
         defaults.setProperty("restartable", "false");
         defaults.setProperty("cursesalwayscurses", "false");
+        defaults.setProperty("nocontroller", "false");
         defaults.setProperty("coe", "false");
         defaults.setProperty("cor", "0");
         defaults.setProperty("cog", "0");
@@ -112,6 +115,8 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
         doVisibleRewards = config.getBool("visiblerewards");
         canRestart = config.getBool("restartable");
         doCalculator = config.getBool("calculator");
+        noController = config.getBool("nocontroller");
+        hasInitialized = true;
         BaseMod.subscribe(new OceanMod());
     }
 
@@ -191,6 +196,14 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
                 config.setBool("cursesalwayscurses", button.enabled);
                 try {config.save();} catch (Exception e) {}
                 BorderColours.cursesAlwaysCurses = button.enabled;
+        }));
+        configY -= configStep;
+        settingsPanel.addUIElement(new ModLabeledToggleButton(
+            TEXT[21],                         configX,configY,Settings.CREAM_COLOR,FontHelper.charDescFont,
+            config.getBool("nocontroller"), settingsPanel,(label) -> {},(button) -> {
+                config.setBool("nocontroller", button.enabled);
+                try {config.save();} catch (Exception e) {}
+                noController = button.enabled;
         }));
 
         float right = 400f * Settings.scale;
