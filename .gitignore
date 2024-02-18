@@ -1,6 +1,6 @@
 target/
 /mod-uploader.jar
-/oceanmod/
+*.jar
 sendToDevs/
 steam_appid.txt
 /forkedflamefrenzy/forkedflamefrenzy/
