@@ -23,7 +23,8 @@
             "Curse",
             "Allow pressing F10 to restart ModTheSpire.",
             "Curses ALWAYS use the curse frame, never special.",
-            "Disable controller input (requires restart)"
+            "Disable controller input (requires restart)",
+            "Elites have different names when tinified by preserved insect."
         ]
     },
 
@@ -56,5 +57,29 @@
             " Players",
             "Together in Spire"
         ]
+    },
+
+    "oceanmod:PreservedEnemies": {
+        "TEXT_DICT": {
+            "GremlinNob": "Gremlin Noob",
+            "Lagavulin": "Crab",
+            "Sentry": "Decade",
+            "SlaverBoss": "Task Manager",
+            "SlaverBlue": "explorer.exe",
+            "SlaverRed": "SlayTheSpire.exe",
+            "BookOfStabbing": "Pamphlet of Poking",
+            "GremlinLeader": "Gremlin Assistant",
+            "GremlinFat": "Overfed Gremlin",
+            "GremlinThief": "Nasty Gremlin",
+            "GremlinTsundere": "Pillow Gremlin",
+            "GremlinWarrior": "Ticked Off Gremlin",
+            "GremlinWizard": "Mage Gremlin",
+            "Nemesis": "Nuisance",
+            "Reptomancer": "Snecko Cosplayer",
+            "Dagger": "Butter Knife",
+            "GiantHead": "Medium Head",
+            "SpireSpear": "Spire Toothpick",
+            "SpireShield": "Spire Bin Lid"
+        }
     }
 }

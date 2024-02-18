@@ -33,6 +33,7 @@ import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen;
 
 import oceanmod.patches.BorderColours;
+import oceanmod.patches.PreservedEnemies;
 import oceanmod.ui.whiteboard.Menu;
 import oceanmod.ui.whiteboard.PanelItem;
 
@@ -81,6 +82,7 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
         defaults.setProperty("visiblerewards", "false");
         defaults.setProperty("restartable", "false");
         defaults.setProperty("cursesalwayscurses", "false");
+        defaults.setProperty("preservedenemies", "true");
         defaults.setProperty("nocontroller", "false");
         defaults.setProperty("coe", "false");
         defaults.setProperty("cor", "0");
@@ -115,6 +117,7 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
         doVisibleRewards = config.getBool("visiblerewards");
         canRestart = config.getBool("restartable");
         doCalculator = config.getBool("calculator");
+        PreservedEnemies.enabled = config.getBool("preservedenemies");
         noController = config.getBool("nocontroller");
         hasInitialized = true;
         BaseMod.subscribe(new OceanMod());
@@ -204,6 +207,14 @@ public class OceanMod implements PostInitializeSubscriber, EditStringsSubscriber
                 config.setBool("nocontroller", button.enabled);
                 try {config.save();} catch (Exception e) {}
                 noController = button.enabled;
+        }));
+        configY -= configStep;
+        settingsPanel.addUIElement(new ModLabeledToggleButton(
+            TEXT[22],                         configX,configY,Settings.CREAM_COLOR,FontHelper.charDescFont,
+            config.getBool("preservedenemies"), settingsPanel,(label) -> {},(button) -> {
+                config.setBool("preservedenemies", button.enabled);
+                try {config.save();} catch (Exception e) {}
+                PreservedEnemies.enabled = config.getBool("preservedenemies");
         }));
 
         float right = 400f * Settings.scale;
