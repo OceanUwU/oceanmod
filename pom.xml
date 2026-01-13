@@ -24,7 +24,7 @@
         <DiscordRPC.version>1.6.2</DiscordRPC.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--CHANGE THIS TO YOUR STEAM INSTALLATION-->
-        <Steam.path>/home/ocean/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps</Steam.path>
+        <Steam.path>/home/ocean/.local/share/Steam/steamapps</Steam.path>
         <stsPath>${Steam.path}/common/SlayTheSpire/</stsPath>
         <workshopFolder>${Steam.path}/workshop/content/646570/</workshopFolder>
     </properties>
@@ -84,7 +84,7 @@
             <artifactId>EvilWithin</artifactId>
             <version>${EvilWithin.version}</version>
             <scope>system</scope>
-            <systemPath>${workshopFolder}1610056683/downfall.jar</systemPath>
+            <systemPath>${workshopFolder}1610056683/Downfall.jar</systemPath>
         </dependency>
     </dependencies>
 
